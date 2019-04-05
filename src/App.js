@@ -1,25 +1,80 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Modal from './components/Modal';
+import Table from './components/Table';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faList } from '@fortawesome/free-solid-svg-icons'
+
+library.add(faList)
 
 class App extends Component {
+  constructor(props) {
+    super();
+    this.state ={
+      list:[],
+      showModal:false,
+      todoData:{
+        id:-1,
+        title:'',
+        description:'',
+        date:'',
+        type:''
+      }
+    }
+  }
+
+  handleChange = (e) => {
+    let todoData = {...this.state.todoData};
+    todoData[e.target.name] = e.target.value;
+    this.setState({ todoData });
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.setState((prevState)=>{
+      return {...prevState, list:this.state.list.concat(this.state.todoData), todoData:{id: ++prevState.todoData.id,title:'',
+      description:'',
+      date:'',
+      type:''},showModal:false}
+    })
+  }
+
+  toggle = () => {
+    this.setState({
+      showModal: !this.state.showModal
+    })
+  }
+
+  deleteItem= (id)=> {
+    console.log(id);
+    this.setState((prevStete)=> {
+      return {list: this.state.list.filter((item,index)=> item.id !== id)}
+    })
+  }
+
+  editItem= (id)=> {
+    console.log(id);
+    this.setState((prevStete)=> {
+      return {list: this.state.list.filter((item,index)=> item.id !== id)}
+    })
+  }
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+        <FontAwesomeIcon icon="list" className="icon"/> ToDo App
         </header>
+        <button onClick={()=>this.toggle()}>Add new Task</button>
+        <Table list={this.state.list} deleteItem={this.deleteItem} editItem={this.editItem}/>
+        
+        {this.state.showModal && 
+        <Modal 
+        handleChange={this.handleChange} 
+        todoData={this.state.todoData} 
+        handleSubmit={this.handleSubmit} 
+        toggle={this.toggle}/> }
       </div>
     );
   }

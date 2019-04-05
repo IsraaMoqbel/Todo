@@ -1,0 +1,14 @@
+table, th, td {
+    border: 1px solid white;
+    border-collapse: collapse;
+  }
+  th, td {
+    padding: 15px;
+    text-align: left;
+    color: #61dafb;
+  }
+  table#t01 {
+    margin: 0 auto;
+    width: 80%;    
+    background-color:  #282c34;
+  }
