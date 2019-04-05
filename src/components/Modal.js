@@ -14,7 +14,7 @@ class Modal extends Component {
   componentWillUnmount() {
     document.removeEventListener('mousedown', this.handleClick, false)
   }
-  
+
   handleClick(e) {
     if(this.node.contains(e.target)) {
       return;
@@ -24,7 +24,7 @@ class Modal extends Component {
   }
   render() {
     return (
-      <form onSubmit={(e)=>this.props.handleSubmit(e)} >
+      <form onSubmit={(e)=> this.props.editMode ? this.props.handleEdit(e, this.props.todoData.id) : this.props.handleSubmit(e)} >
         <div className="modal">
           <div className="modal-content" ref={node=>this.node=node}>
           <span className="close" onClick={()=>this.props.toggle()}>&times;</span>

@@ -15,7 +15,7 @@ class Table extends Component {
                 <th>Date</th>
                 <th>Type</th>
             </tr>
-            {this.props.list.length > 0 ? this.props.list.map((item,index)=><TableRow row={item} key={index} deleteItem={this.props.deleteItem}/>): null}
+            {this.props.list.length > 0 ? this.props.list.map((item,index)=><TableRow row={item} key={index} deleteItem={this.props.deleteItem} editItem={this.props.editItem}/>): null}
             </tbody>
 
         </table>

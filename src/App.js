@@ -14,6 +14,7 @@ class App extends Component {
     this.state ={
       list:[],
       showModal:false,
+      editMode:false,
       todoData:{
         id:-1,
         title:'',
@@ -54,10 +55,32 @@ class App extends Component {
   }
 
   editItem= (id)=> {
-    console.log(id);
-    this.setState((prevStete)=> {
-      return {list: this.state.list.filter((item,index)=> item.id !== id)}
-    })
+    this.setState({
+      showModal: !this.state.showModal,
+      editMode: true,
+      todoData:{
+        id:id,
+        title:this.state.list[id].title,
+        description:this.state.list[id].description,
+        date:this.state.list[id].date,
+        type:this.state.list[id].type
+      }
+    });
+
+  }
+
+  handleEdit= (e,id)=> {
+    e.preventDefault();
+    let list = [ ...this.state.list ];
+    list[id] = {
+      id:id,
+      title:this.state.todoData.title,
+      description:this.state.todoData.description,
+      date:this.state.todoData.date,
+      type:this.state.todoData.type
+    };
+    this.setState((prev)=> {return {...prev,list, editMode:false}});
+    this.toggle();
   }
 
   render() {
@@ -74,7 +97,9 @@ class App extends Component {
         handleChange={this.handleChange} 
         todoData={this.state.todoData} 
         handleSubmit={this.handleSubmit} 
-        toggle={this.toggle}/> }
+        toggle={this.toggle}
+        editMode = {this.state.editMode}
+        handleEdit= {this.handleEdit}/> }
       </div>
     );
   }
