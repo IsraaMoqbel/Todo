@@ -79,7 +79,10 @@ class App extends Component {
       date:this.state.todoData.date,
       type:this.state.todoData.type
     };
-    this.setState((prev)=> {return {...prev,list, editMode:false}});
+    this.setState((prev)=> {return {...prev,list, editMode:false ,todoData:{title:'',
+    description:'',
+    date:'',
+    type:''}}});
     this.toggle();
   }
 
